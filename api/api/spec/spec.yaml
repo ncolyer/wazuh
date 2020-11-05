@@ -4494,7 +4494,8 @@ components:
         type: string
         enum:
         - file
-        - registry
+        - registry_key
+        - registry_value
     summary:
       in: query
       name: summary
@@ -4883,6 +4884,15 @@ components:
       schema:
         type: string
         format: alphanumeric
+    syscheck_arch:
+      in: query
+      name: arch
+      description: "Filter by architecture"
+      schema:
+        type: string
+        enum:
+        - [x32]
+        - [x64]
     sgroup:
       in: query
       name: sgroup
@@ -5007,6 +5017,20 @@ components:
           - 'policy:id'
           - 'role:id'
           - 'user:id'
+    value_name:
+      in: query
+      name: value_name
+      description: "Filter by value name"
+      schema:
+        type: string
+        format: alphanumeric
+    value_type:
+      in: query
+      name: value_type
+      description: "Filter by value type"
+      schema:
+        type: string
+        format: alphanumeric
 
 tags:
   - name: active-response
@@ -10834,6 +10858,9 @@ paths:
         - $ref: '#/components/parameters/search'
         - $ref: '#/components/parameters/select'
         - $ref: '#/components/parameters/full_path_filter'
+        - $ref: '#/components/parameters/syscheck_arch'
+        - $ref: '#/components/parameters/value_name'
+        - $ref: '#/components/parameters/value_type'
         - $ref: '#/components/parameters/filetype'
         - $ref: '#/components/parameters/summary'
         - $ref: '#/components/parameters/md5'
