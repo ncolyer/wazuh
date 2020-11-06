@@ -582,7 +582,11 @@ int fim_db_process_read_file(fdb_t *fim_sql, fim_tmp_file *file, pthread_mutex_t
     int i = 0;
 
     if (storage == FIM_DB_DISK) {
-        fseek(file->fd, SEEK_SET, 0);
+        if (fseek(file->fd, 0, SEEK_SET)) {
+            mwarn(FIM_DB_TEMPORARY_FILE_POSITION, errno, strerror(errno));
+            fim_db_clean_file(&file, storage);
+            return FIMDB_ERR;
+        }
     }
 
     for (i = 0; i < file->elements; i++) {
